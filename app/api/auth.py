@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app import models, schemas
 from app.security import hash_password, verify_password, create_access_token
-from app.main import get_current_user
+from app.dependencies import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -16,7 +16,7 @@ def register(body: schemas.RegisterRequest, db: Session = Depends(get_db)):
     user = models.User(
         email=body.email,
         hashed_password=hash_password(body.password),
-        full_name=body.full_name,
+        fullname=body.full_name,
         role=body.role,
         is_active=True,
     )

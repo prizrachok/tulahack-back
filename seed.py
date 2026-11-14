@@ -7,14 +7,14 @@ Base.metadata.create_all(bind=engine)
 db = SessionLocal()
 
 
-def upsert_user(email, password, full_name, role):
+def upsert_user(email, password, fullname, role):
     u = db.query(models.User).filter(models.User.email == email).first()
     if u:
         return u
     u = models.User(
         email=email,
         hashed_password=hash_password(password),
-        full_name=full_name,
+        fullname=fullname,
         role=role,
         is_active=True,
     )

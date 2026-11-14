@@ -10,11 +10,15 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    # Принудительно обрезаем пароль до 72 байт
+    safe_password = password[:72]
+    return pwd_context.hash(safe_password)
 
 
-def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    # Принудительно обрезаем пароль до 72 байт
+    safe_password = plain_password[:72]
+    return pwd_context.verify(safe_password, hashed_password)
 
 
 def create_access_token(data: dict) -> str:
